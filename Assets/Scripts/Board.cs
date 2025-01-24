@@ -9,8 +9,11 @@ public class Board : MonoBehaviour
 
     public Gem[] gems;
     
+    public Gem[,] allGems;
+    
     void Start()
     {
+        allGems = new Gem[width, height];
         SetUp();
     }
 
@@ -23,7 +26,7 @@ public class Board : MonoBehaviour
                 Vector2 position = new Vector2(i, j);
                 GameObject bgTile = Instantiate(bgTilePrefab,position,Quaternion.identity);
                 bgTile.transform.SetParent(transform);
-                bgTile.name = "BgTile_" + i + "," + j;
+                bgTile.name = "BgTile - " + i + "," + j;
                 
                 int gemToUse = Random.Range(0, gems.Length);
                 SpawnGem(new Vector2Int(i, j), gems[gemToUse]);
@@ -36,6 +39,9 @@ public class Board : MonoBehaviour
        Gem gem =  Instantiate(gemToSpawn, new Vector3(pos.x,pos.y,0f), Quaternion.identity);
        gem.transform.SetParent(transform);
        gem.name = "Gem - " + pos.x + "," + pos.y + "," + gemToSpawn;
+       allGems[pos.x, pos.y] = gem;
+
+       gem.SetupGem(pos, this);
     }
 
 

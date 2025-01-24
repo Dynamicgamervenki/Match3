@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class Gem : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    [HideInInspector]
+    public Vector2Int posIndex;
+    [HideInInspector]
+    public Board board;
+    
+
+    public void SetupGem(Vector2Int pos, Board theboard)
     {
-        
+        posIndex = pos;
+        board = theboard;
     }
 }
