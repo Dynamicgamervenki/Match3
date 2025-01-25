@@ -16,7 +16,8 @@ public class Board : MonoBehaviour
 
     public float gemSpeed;
     
-    private MatchFinder matchFind;
+    [HideInInspector]
+    public MatchFinder matchFind;
 
     private void Awake()
     {

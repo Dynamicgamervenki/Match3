@@ -23,6 +23,9 @@ public class Gem : MonoBehaviour
 
     public bool isMatched;
     
+    private Vector2Int previousPosition;
+    
+    
     private void Update()
     {
         if (Vector2.Distance(transform.position, posIndex) > 0.1f)
@@ -69,6 +72,8 @@ public class Gem : MonoBehaviour
 
     private void MovePieces()
     {
+        previousPosition = posIndex;
+        
         if(swipeAngle < 45 && swipeAngle > -45 && posIndex.x < board.width - 1)
         {
             //Swiping Right
@@ -98,5 +103,30 @@ public class Gem : MonoBehaviour
 
         board.allGems[posIndex.x, posIndex.y] = this;
         board.allGems[otherGem.posIndex.x, otherGem.posIndex.y] = otherGem;
+
+        StartCoroutine(CheckMoveCoroutine());
+
     }
+
+    public IEnumerator CheckMoveCoroutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        
+        board.matchFind.FindAllMatches();
+
+        if (otherGem != null)
+        {
+            if (!isMatched && !otherGem.isMatched)
+            {
+                otherGem.posIndex = posIndex;
+                posIndex = previousPosition;
+                
+                board.allGems[posIndex.x, posIndex.y] = this;
+                board.allGems[otherGem.posIndex.x, otherGem.posIndex.y] = otherGem;
+            }
+        }
+        
+    }
+    
+    
 }
