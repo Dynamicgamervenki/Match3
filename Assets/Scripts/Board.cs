@@ -94,4 +94,27 @@ public class Board : MonoBehaviour
         return false;
     }
 
+    private void DestoryMatchedGemAt(Vector2Int pos)
+    {
+        if (allGems[pos.x, pos.y] != null)
+        {
+            if (allGems[pos.x, pos.y].isMatched)
+            {
+                Destroy(allGems[pos.x, pos.y].gameObject);
+                allGems[pos.x, pos.y] = null;
+            }
+        }
+    }
+
+    public void DestroyMatches()
+    {
+        for (int i = 0; i < matchFind.currentMatches.Count; i++)
+        {
+            if (matchFind.currentMatches[i] != null)
+            {
+                DestoryMatchedGemAt(matchFind.currentMatches[i].posIndex);
+            }
+        }
+    }
+
 }
