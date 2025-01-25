@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEditor.Media;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -114,6 +115,34 @@ public class Board : MonoBehaviour
             {
                 DestoryMatchedGemAt(matchFind.currentMatches[i].posIndex);
             }
+        }
+
+        StartCoroutine(DecreaseRowCo());
+    }
+
+    private IEnumerator DecreaseRowCo()
+    {
+        yield return new WaitForSecondsRealtime(.2f);
+
+        int nullCounter = 0;
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (allGems[x,y] == null)
+                {
+                    nullCounter++;
+                }
+                else if(nullCounter > 0)
+                {
+                    allGems[x,y].posIndex.y -= nullCounter;
+                    allGems[x,y - nullCounter] = allGems[x, y];
+                    allGems[x, y] = null;
+                }
+            }
+            
+            nullCounter = 0;
         }
     }
 
