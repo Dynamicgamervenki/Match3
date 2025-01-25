@@ -1,4 +1,5 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Gem : MonoBehaviour
@@ -18,6 +19,16 @@ public class Gem : MonoBehaviour
     
     private void Update()
     {
+        if (Vector2.Distance(transform.position, posIndex) > 0.1f)
+        {
+            transform.position = Vector2.Lerp(transform.position,posIndex,board.gemSpeed * Time.deltaTime);
+        }
+        else
+        {
+            transform.position = new Vector3(posIndex.x, posIndex.y, 0f);
+            board.allGems[posIndex.x, posIndex.y] = this;
+        }
+        
         if (mousePressed && Input.GetMouseButtonUp(0))
         {
             mousePressed = false;

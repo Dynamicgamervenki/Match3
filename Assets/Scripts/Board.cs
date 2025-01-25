@@ -10,6 +10,8 @@ public class Board : MonoBehaviour
     public Gem[] gems;
     
     public Gem[,] allGems;
+
+    public float gemSpeed;
     
     void Start()
     {
