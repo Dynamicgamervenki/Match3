@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor.Media;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -175,6 +176,32 @@ public class Board : MonoBehaviour
                 }
             }
         }
+        
+        CheckMisplacedGems();
+    }
+
+    private void CheckMisplacedGems()
+    {
+        List<Gem> foundGems = new List<Gem>();
+        
+        foundGems.AddRange(FindObjectsOfType<Gem>());
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (foundGems.Contains(allGems[x, y]))
+                {
+                    foundGems.Remove(allGems[x, y]);
+                }
+
+            }
+        }
+
+        foreach (Gem gem in foundGems)
+        {
+            Destroy(gem.gameObject);
+        }
+
     }
     
 }
