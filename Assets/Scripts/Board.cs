@@ -1,4 +1,7 @@
+using System;
+using UnityEditor.Media;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Board : MonoBehaviour
 {
@@ -13,10 +16,22 @@ public class Board : MonoBehaviour
 
     public float gemSpeed;
     
+    private MatchFinder matchFind;
+
+    private void Awake()
+    {
+        matchFind = FindObjectOfType<MatchFinder>();
+    }
+
     void Start()
     {
         allGems = new Gem[width, height];
         SetUp();
+    }
+
+    private void Update()
+    {
+        matchFind.FindAllMatches();
     }
 
     private void SetUp()

@@ -17,6 +17,12 @@ public class Gem : MonoBehaviour
 
     private Gem otherGem;
     
+    public enum GemType {blue ,green,red,yellow,purple}
+
+    public GemType type;
+
+    public bool isMatched;
+    
     private void Update()
     {
         if (Vector2.Distance(transform.position, posIndex) > 0.1f)
