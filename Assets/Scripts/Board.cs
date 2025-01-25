@@ -21,6 +21,9 @@ public class Board : MonoBehaviour
     [HideInInspector]
     public MatchFinder matchFind;
 
+    public enum BoardState {wait,move}
+    public BoardState currentstate = BoardState.move;
+    
     private void Awake()
     {
         matchFind = FindObjectOfType<MatchFinder>();
@@ -34,7 +37,7 @@ public class Board : MonoBehaviour
 
     private void Update()
     {
-        matchFind.FindAllMatches();
+      //  matchFind.FindAllMatches();
     }
 
     private void SetUp()
@@ -158,8 +161,13 @@ public class Board : MonoBehaviour
 
         if (matchFind.currentMatches.Count > 0)
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.5f);
             DestroyMatches();
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.5f);
+            currentstate = BoardState.move;
         }
     }
 
