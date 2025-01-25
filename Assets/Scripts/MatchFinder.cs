@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class MatchFinder : MonoBehaviour
 {
     private Board board;
-
+    public List<Gem> currentMatches = new List<Gem>();
+    
     private void Awake()
     {
         board = FindObjectOfType<Board>();
@@ -12,6 +15,8 @@ public class MatchFinder : MonoBehaviour
 
     public void FindAllMatches()
     {
+        // currentMatches.Clear();
+        
         for (int x = 0; x < board.width; x++)
         {
             for (int y = 0; y < board.height; y++)
@@ -29,7 +34,11 @@ public class MatchFinder : MonoBehaviour
                             {
                                 currentGem.isMatched = true;
                                 leftGem.isMatched = true;
-                                rightGem.isMatched = true;
+                                rightGem.isMatched = true; 
+                                
+                                currentMatches.Add(currentGem);
+                                currentMatches.Add(leftGem);
+                                currentMatches.Add(rightGem);
                             }
                         }
                     }
@@ -37,7 +46,7 @@ public class MatchFinder : MonoBehaviour
                     if (y > 0 && y < board.width - 1)
                     {
                         Gem aboveGem = board.allGems[x, y+1];
-                        Gem belowGem = board.allGems[x + 1, y-1];
+                        Gem belowGem = board.allGems[x, y-1];
                         if (aboveGem != null && belowGem != null)
                         {
                             if (aboveGem.type == currentGem.type && belowGem.type == currentGem.type)
@@ -45,8 +54,17 @@ public class MatchFinder : MonoBehaviour
                                 currentGem.isMatched = true;
                                 aboveGem.isMatched = true;
                                 belowGem.isMatched = true;
+                                
+                                currentMatches.Add(currentGem);
+                                currentMatches.Add(aboveGem);
+                                currentMatches.Add(belowGem);
                             }
                         }
+                    }
+
+                    if (currentMatches.Count > 0)
+                    {
+                        currentMatches = currentMatches.Distinct().ToList();
                     }
                     
                 }
