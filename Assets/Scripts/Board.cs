@@ -47,6 +47,15 @@ public class Board : MonoBehaviour
                 bgTile.name = "BgTile - " + i + "," + j;
                 
                 int gemToUse = Random.Range(0, gems.Length);
+
+                int iterations = 0;
+                while (MatchesAt(new Vector2Int(i,j),gems[gemToUse]) && iterations < 50)
+                {
+                     gemToUse = Random.Range(0, gems.Length);
+                     iterations++;
+                     Debug.Log(iterations);
+                }
+                
                 SpawnGem(new Vector2Int(i, j), gems[gemToUse]);
             }
         }
@@ -62,5 +71,27 @@ public class Board : MonoBehaviour
        gem.SetupGem(pos, this);
     }
 
+    private bool MatchesAt(Vector2Int posToCheck, Gem gemToCheck)
+    {
+        if (posToCheck.x > 1)
+        {
+            if (allGems[posToCheck.x - 1, posToCheck.y].type == gemToCheck.type &&
+                allGems[posToCheck.x - 2, posToCheck.y].type == gemToCheck.type)
+            {
+                return true;
+            }
+        }
+
+        if (posToCheck.y > 1)
+        {
+                if (allGems[posToCheck.x, posToCheck.y -1 ].type == gemToCheck.type &&
+                    allGems[posToCheck.x, posToCheck.y - 2].type == gemToCheck.type)
+                {
+                    return true;
+                }
+        }
+        
+        return false;
+    }
 
 }
