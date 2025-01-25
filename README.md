@@ -89,7 +89,7 @@ A simple yet engaging Match-3 game created in Unity in under 7 hours. Inspired b
 
 ## Screenshots 📸
 
-<!-- Uploading "Match3 - SampleScene - Windows, Mac, Linux - Unity 6 (6000.0.34f1) _DX11_ 2025-01-25 15-05-24.mp4"... -->
+(https://github.com/user-attachments/assets/a2c35bf4-ea6e-4117-acd0-d8a46dae8603)
 
 * Initial Board
 * Match Cleared
