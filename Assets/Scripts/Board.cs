@@ -144,6 +144,37 @@ public class Board : MonoBehaviour
             
             nullCounter = 0;
         }
+        StartCoroutine(FillBoardCo());
     }
 
+    private IEnumerator FillBoardCo()
+    {
+        yield return new WaitForSeconds(0.5f);
+        RefillBoard();
+
+        yield return new WaitForSeconds(.5f);
+        matchFind.FindAllMatches();
+
+        if (matchFind.currentMatches.Count > 0)
+        {
+            yield return new WaitForSeconds(1.5f);
+            DestroyMatches();
+        }
+    }
+
+    private void RefillBoard()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (allGems[x, y] == null)
+                {
+                    int gemToUse = Random.Range(0, gems.Length);
+                    SpawnGem(new Vector2Int(x,y),gems[gemToUse]);
+                }
+            }
+        }
+    }
+    
 }
